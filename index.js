@@ -69,7 +69,9 @@ app.post('/pic', (req, res, next) => {
             console.error(err);
         } else {
             // upload the thing
-
+            if (pic.size !== 0) {
+                // pic
+            }
         }
     })
 })
