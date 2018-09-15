@@ -16,6 +16,9 @@ app.use((req, res, next) => {
         next();
     });
 });
+app.use(express.static('views'));
+
+mongoose.connect('mongodb://localhost/fitpic');
 
 const userSchema = new mongoose.Schema({
     username: 'string',
@@ -36,6 +39,7 @@ app.post('/register', (req, res, next) => {
     User.create({ ...req.body }, (err, user) => {
         if (err) {
             console.error(err);
+            res.send(err);
         } else {
             res.json(user);
         }
@@ -46,6 +50,7 @@ app.post('/login', (req, res, next) => {
     User.findOne({ ...req.body }, (err, user) => {
         if (err) {
             console.error(err);
+            res.send(err);
         } else if (!user || Object.keys(user).length === 0) {
             res.json({
                 error: 'Invalid credentials.',
@@ -71,6 +76,7 @@ app.post('/pic', (req, res, next) => {
             // upload the thing
             if (pic.size !== 0) {
                 // pic
+
             }
         }
     })

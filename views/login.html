@@ -14,15 +14,15 @@
 		<div class="login">
 			<div class="login-screen">
 				<div class="app-title">
-					<h1> FitPick</h1>
+					<h1>FitPick</h1>
 					<h3>Login</h3>
 				</div>
-				<form action="/login" method="POST" encrypt="multipart/form-data">
+				<form action="/login" method="POST" id="login" encrypt="multipart/form-data">
 					<div class = "login-form">
 						<h4>Username</h4>
-						<input type="email" name = "username"><br>
+						<input type="text" id = "username"><br>
 						<h4>Password</h4>
-						<input type="password" name="password"><br>
+						<input type="password" id="password"><br>
 						<br>
 						<input type="submit" value="Login" class="btn btn-primary btn-large btn-block" >
 					</div>
@@ -35,5 +35,28 @@
 			</div>
 		</div>
 	</form>
+
+	<script>
+	$("#login").submit(function(event) {
+		$.ajax({
+			url: '/login',
+			method: 'post',
+			data: {
+				username: $("#username").val(),
+				password: $("#password").val()
+			}
+		}).done(function(result) {
+			if (result.username) {
+				window.localStorage.setItem('user', JSON.stringify(result));
+				location.href = '/index.html';
+			} else {
+				alert('Invalid creds');
+			}
+		});
+
+		event.preventDefault();
+		return false;
+	})
+	</script>
 </body>
 </html>
