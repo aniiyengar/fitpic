@@ -17,12 +17,12 @@
 					<h1>FitPick</h1>
 					<h3>Register</h3>
 				</div>
-				<form action="/register" method="POST" encrypt="multipart/form-data">
+				<form action="/register" method="POST" id="register" encrypt="multipart/form-data">
 					<div class = "login-form">
 						<h4>Username</h4>
-						<input type="email" name = "username"><br>
+						<input type="email" id = "username"><br>
 						<h4>Password</h4>
-						<input type="password" name="password"><br>
+						<input type="password" id="password"><br>
 						<br>
 						<input type="submit" value="Register" class="btn btn-primary btn-large btn-block" >
 					</div>
@@ -34,6 +34,27 @@
 				</a>
 			</div>
 		</div>
+
+    <script>
+    $("#register").submit(function(event) {
+  		$.ajax({
+  			url: '/register',
+  			method: 'post',
+  			data: {
+  				username: $("#username").val(),
+  				password: $("#password").val()
+  			}
+  		}).done(function(result) {
+  			if (result.username) {
+  				window.localStorage.setItem('user', JSON.stringify(result));
+  				location.href = '/index.html';
+  			}
+  		});
+
+  		event.preventDefault();
+  		return false;
+  	})
+    </script>
 	</form>
 </body>
 </html>
